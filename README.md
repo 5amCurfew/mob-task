@@ -194,8 +194,11 @@ Total Revenue: £613.39
 *Tax Treatment: A customer in Germany has an annual €43.74 subscription with 19% VAT (inclusive). The invoice shows total=43.74, tax=6.98, and we need to recognise €3.06 in revenue per month (excluding VAT). Walk through your calculation and any edge cases.*
 
 Monthly revenue = (43.74 - 6.98) / 12 = 3.06333333333 ~ 3.06
+
 Net Revenue = 43.74/1.19 = 36.756302521
+
 Tax = 43.74 - 36.756302521 = 6.983697479 ~ 6.98
+
 Total revenue = 3.06 x 12 = 36.72 *edge case here where when rounded, total revenue is 0.04 short*
 
 Edge cases:
