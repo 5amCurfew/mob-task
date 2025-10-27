@@ -48,9 +48,9 @@ Orchestration would be managed by [Apache Airflow](https://airflow.apache.org/) 
 
 ## Schema Design
 
-Proposal: a normalised, star schema, with `fct_invoice_line_items` at the center where all dimensions reflect Stripe objects and are slowly-changing-type-2 dimensions. This reduces data duplication avoiding redundancy across full extracts (clean, historical, per-entity versioning), simple auditing (trace back to Stripe source) and efficient incremental transformations. Here, joining utilising object state periods allow for consistent reporting in addition to a full audit trace and 
+Proposal: a normalised, star schema, with `fct_invoice_line_items` at the center where all dimensions reflect Stripe objects and are slowly-changing-type-2 dimensions. This reduces data duplication avoiding redundancy across full extracts (clean, historical, per-entity versioning), simple auditing (trace back to Stripe source) and efficient incremental transformations. Here, joining utilising object state periods allow for consistent reporting in addition to a full audit trace.
 
-Following this a mart layer would be introduced to encapsulate business logic deriving daily recognised and deferred revenue which can then be used in a reporting suite. *Snippets* of what this mart layer would look like can be demonstrated using the Python transformations seen in `etl/transform`. 
+Following this a mart layer would be introduced to encapsulate business logic deriving daily recognised and deferred revenue which can then be used in a reporting suite. *Samples* of what this mart layer would look like can be demonstrated using the Python transformations seen in `etl/transform`. 
 
 ![Entity Relationship Diagram](./img/erd.png)
 
