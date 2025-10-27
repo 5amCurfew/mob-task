@@ -162,18 +162,61 @@ def schedule_revenue(invoice_lines: List[Dict[str, Any]], invoice_date: datetime
     return schedule
 ```
 
+Output:
+```bash
+Revenue Recognition Schedule:
+------------------------------------------------------------------------------------------------------------------------
+Date         Status     Type                USD        GBP    Rate Recorded Date  Invoice Line ID
+------------------------------------------------------------------------------------------------------------------------
+...
+2026-04-01   deferred   proration    $     2.79 £     2.29   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX_UPGRADE
+2026-04-01   deferred   subscription $     1.64 £     1.35   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX
+2026-04-02   deferred   proration    $    -2.03 £    -1.66   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX_PRORATION
+2026-04-02   deferred   proration    $     2.79 £     2.29   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX_UPGRADE
+2026-04-02   deferred   subscription $     1.64 £     1.35   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX
+2026-04-03   deferred   proration    $    -2.03 £    -1.66   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX_PRORATION
+2026-04-03   deferred   proration    $     2.79 £     2.29   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX_UPGRADE
+2026-04-03   deferred   subscription $     1.64 £     1.35   0.820 2025-04-04     il_1MtHbELkdIwHu7ixA2TvQvGX
+------------------------------------------------------------------------------------------------------------------------
+USD Summary:
+Recognised Revenue: $369.12
+Deferred Revenue: $379.20
+Total Revenue: $748.32
+
+GBP Summary:
+Recognised Revenue: £300.55
+Deferred Revenue: £312.84
+Total Revenue: £613.39
+```
 
 ## Discussion
 
-*Tax Treatment: A customer in GERMANYy has an annual €43.74 subscription with 19% VAT (inclusive). The invoice shows total=43.74, tax=6.98, and we need to recognise €3.06 in revenue per month (excluding VAT). Walk through your calculation and any edge cases.*
+*Tax Treatment: A customer in Germany has an annual €43.74 subscription with 19% VAT (inclusive). The invoice shows total=43.74, tax=6.98, and we need to recognise €3.06 in revenue per month (excluding VAT). Walk through your calculation and any edge cases.*
+
+Monthly revenue = (43.74 - 6.98) / 12 = 3.06333333333 ~ 3.06
+Net Revenue = 43.74/1.19 = 36.756302521
+Tax = 43.74 - 36.756302521 = 6.983697479 ~ 6.98
+Total revenue = 3.06 x 12 = 36.72 *edge case here where when rounded, total revenue is 0.04 short*
+
+Edge cases:
+* Shortcomings with respect to total monthly revenue can be accounted for with a balancing figure (single, or spread over a given set of periods).
+* Changing VAT rates throughout a period would need to be accounted(?)
 
 *Missing Data: You discover that 3% of paid invoices are missing line_items.period.end dates (they're null). How do you handle this in production?*
 
+I'd prefer not to "quarantine this issue" and maintain this in production in the presentation/mart layers of data modelling. Can this be inferred from other objects? Fallback on to the subscription period? Introduce a new status recognised, deferred, *approximated* in this case? Let me speak to the Finance team?
+
 *Historical Backfill: We need to backfill 2 years of historical data (say, ~100,000 invoices). What's your strategy for the initial load vs. ongoing daily syncs?*
+
+For an initial load I would look to process periods separately but in parallel (e.g. each monthly period) using Stripe's created/period end parameters. When backfilling, I would also probably look to UPSERT where applicable (rather than more incrementally driven daily syncs) (APPEND ONLY).
 
 *Future-proofing the Infrastructure: Discuss how your design would scale if data volume increases by orders of magnitude (10x, 100x).*
 
+With respect to data storage, my proposed architecture helps to keep this optimal given the SCD2 nature of the data models. Daily snapshot frequency here would still feel applicable. There would likely be a case for a separate cold storage of granular data, while aggregated data of older periods are presented. The main concern is that the proposed architecture ingests *all* of the current state - this would need to be broken up into more batch increments.
+
 *Business Logic Clarification: The finance team says ‘we recognise revenue daily’ but the Stripe subscription periods are monthly/yearly. Do you recognise 1/30th of the monthly revenue each day, or the full month's revenue on the 1st? What questions would you ask?*
+
+My default would be to process the granularity that allows the most flexibility to an end user which means the daily proportion. With respect to the data model, providing an additional `monthly_revenue` to the 1st of each month straight forward? I would ask about further reporting standards across the business to help define this.
 
 ## Notes
 
