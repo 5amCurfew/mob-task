@@ -1,0 +1,147 @@
+{
+    "id": "in_1MtHbELkdIwHu7ixl4OzzPMv",
+    "object": "invoice",
+    "account_country": "US",
+    "account_name": "Stripe Docs",
+    "amount_due": 75000,
+    "amount_paid": 75000,
+    "amount_remaining": 0,
+    "attempted": true,
+    "auto_advance": true,
+    "billing_reason": "subscription_update",
+    "collection_method": "charge_automatically",
+    "created": 1743802867,
+    "currency": "usd",
+    "customer": "cus_NeZwdNtLEOXuvB",
+    "customer_email": "jennyrosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "lines": {
+        "object": "list",
+        "data": [
+            {
+                "id": "il_1MtHbELkdIwHu7ixA2TvQvGX",
+                "object": "line_item",
+                "amount": 60000,
+                "currency": "usd",
+                "description": "1 Basic Annual Plan (at $600.00 / year, $50 / month), starting 4th April 2025",
+                "discountable": true,
+                "period": {
+                    "start": 1743802867,
+                    "end": 1775338867
+                },
+                "price": {
+                    "id": "price_1MtHbELkdIwHu7ixYfSVWgX9",
+                    "object": "price",
+                    "active": true,
+                    "currency": "usd",
+                    "product": "prod_NtHbELkdIwHu7ix",
+                    "unit_amount": 60000,
+                    "recurring": {
+                        "interval": "year",
+                        "interval_count": 1
+                    }
+                },
+                "quantity": 1,
+                "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                "parent": {
+                    "type": "subscription_item_details",
+                    "subscription_item_details": {
+                        "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                        "subscription_item": "si_NtHbELkdIwHu7ix",
+                        "proration": false
+                    }
+                },
+                "metadata": {}
+            },
+            {
+                "id": "il_1MtHbELkdIwHu7ixA2TvQvGX_PRORATION",
+                "object": "line_item",
+                "amount": -40000,
+                "currency": "usd",
+                "description": "Unused time on Basic Annual Plan after Sept 15, 2025",
+                "discountable": true,
+                "period": {
+                    "start": 1758240000,
+                    "end": 1775338867
+                },
+                "price": {
+                    "id": "price_1MtHbELkdIwHu7ixYfSVWgX9",
+                    "object": "price",
+                    "active": true,
+                    "currency": "usd",
+                    "product": "prod_NtHbELkdIwHu7ix",
+                    "unit_amount": 60000,
+                    "recurring": {
+                        "interval": "year",
+                        "interval_count": 1
+                    }
+                },
+                "proration": true,
+                "quantity": 1,
+                "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                "parent": {
+                    "type": "subscription_item_details",
+                    "subscription_item_details": {
+                        "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                        "subscription_item": "si_NtHbELkdIwHu7ix",
+                        "proration": true
+                    }
+                },
+                "metadata": {}
+            },
+            {
+                "id": "il_1MtHbELkdIwHu7ixA2TvQvGX_UPGRADE",
+                "object": "line_item",
+                "amount": 55000,
+                "currency": "usd",
+                "description": "Premium Annual Plan (Sep 19, 2025 - Apr 4, 2026)",
+                "discountable": true,
+                "period": {
+                    "start": 1758240000,
+                    "end": 1775338867
+                },
+                "price": {
+                    "id": "price_2NtHcFLkdIwHu7ixDgTvRmQP",
+                    "object": "price",
+                    "active": true,
+                    "currency": "usd",
+                    "product": "prod_NtHcFLkdIwHu7iy",
+                    "unit_amount": 120000,
+                    "recurring": {
+                        "interval": "year",
+                        "interval_count": 1
+                    }
+                },
+                "proration": true,
+                "quantity": 1,
+                "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                "parent": {
+                    "type": "subscription_item_details",
+                    "subscription_item_details": {
+                        "subscription": "sub_1MtHbELkdIwHu7ixYjkLMnOP",
+                        "subscription_item": "si_NtHcFLkdIwHu7iy",
+                        "proration": true
+                    }
+                },
+                "metadata": {}
+            }
+        ],
+        "has_more": false,
+        "total_count": 3,
+        "url": "/v1/invoices/in_1MtHbELkdIwHu7ixl4OzzPMv/lines"
+    },
+    "livemode": false,
+    "metadata": {},
+    "period_end": 1743802867,
+    "period_start": 1712266867,
+    "payment_intent": "pi_3MtHbELkdIwHu7ix0879AWnj",
+    "payment_settings": {
+        "payment_method_options": null,
+        "payment_method_types": null
+    },
+    "status": "paid",
+    "subtotal": 75000,
+    "total": 75000,
+    "total_discount_amounts": [],
+    "total_tax_amounts": []
+}

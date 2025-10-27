@@ -1,0 +1,37 @@
+{
+    "id": "il_tmp_1Nzo1ZGgdF1VjufLzD1UUn9R",
+    "object": "line_item",
+    "amount": 1000,
+    "currency": "usd",
+    "description": "My First Invoice Item (created for API docs)",
+    "discount_amounts": [],
+    "discountable": true,
+    "discounts": [],
+    "livemode": false,
+    "metadata": {},
+    "parent": {
+        "type": "invoice_item_details",
+        "invoice_item_details": {
+            "invoice_item": "ii_1NpHiK2eZvKYlo2C9NdV8VrI",
+            "proration": false,
+            "proration_details": {
+                "credited_items": null
+            },
+            "subscription": null
+        }
+    },
+    "period": {
+        "end": 1696975413,
+        "start": 1696975413
+    },
+    "pricing": {
+        "price_details": {
+            "price": "price_1NzlYfGgdF1VjufL0cVjLJVI",
+            "product": "prod_OnMHDH6VBmYlTr"
+        },
+        "type": "price_details",
+        "unit_amount_decimal": "1000"
+    },
+    "quantity": 1,
+    "taxes": []
+}

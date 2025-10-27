@@ -1,0 +1,31 @@
+{
+    "id": "ii_1MtGUtLkdIwHu7ixBYwjAM00",
+    "object": "invoiceitem",
+    "amount": 1099,
+    "currency": "usd",
+    "customer": "cus_NeZei8imSbMVvi",
+    "date": 1680640231,
+    "description": "T-shirt",
+    "discountable": true,
+    "discounts": [],
+    "invoice": null,
+    "livemode": false,
+    "metadata": {},
+    "parent": null,
+    "period": {
+        "end": 1680640231,
+        "start": 1680640231
+    },
+    "pricing": {
+        "price_details": {
+            "price": "price_1MtGUsLkdIwHu7ix1be5Ljaj",
+            "product": "prod_NeZe7xbBdJT8EN"
+        },
+        "type": "price_details",
+        "unit_amount_decimal": "1099"
+    },
+    "proration": false,
+    "quantity": 1,
+    "tax_rates": [],
+    "test_clock": null
+}

@@ -1,0 +1,2 @@
+google-cloud-storage==3.4.1
+stripe==13.0.1
