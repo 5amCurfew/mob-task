@@ -24,6 +24,13 @@ def get_exchange_rate(date_str: str, from_currency: str, to_currency: str) -> fl
     # If no rate found, use the latest available rate
     return sample_rates[available_dates[-1]]
 
+def handle_taxation(line: dict):
+    """
+    Handle taxation logic (PLACEHOLDER)
+    """
+    # For simplicity, assume no taxation in this example
+    return line
+
 def transform_timestamp(ts: int) -> str:
     """Convert Stripe timestamp to ISO format string."""
     return datetime.fromtimestamp(ts).isoformat()
