@@ -39,7 +39,7 @@ def get_current_date() -> date:
     """Get the current date (can be overridden for testing)"""
     return date(2025, 10, 27)  # Hardcoded for demonstration purposes
 
-def schedule_revenue(invoice_lines: List[Dict[str, Any]], invoice_date: datetime) -> List[Dict[str, Any]]:
+def schedule_revenue(invoice_lines: List[Dict[str, Any]], invoice_date: datetime, customer_id: str) -> List[Dict[str, Any]]:
     """
     Schedule revenue recognition for invoice lines, handling prorations and subscription changes.
     Returns both recognised and deferred revenue entries daily.
@@ -76,7 +76,7 @@ def schedule_revenue(invoice_lines: List[Dict[str, Any]], invoice_date: datetime
                 "revenue_status": revenue_status,
                 "type": "subscription" if not line.get("proration", False) else "proration",
                 "subscription_id": subscription_details.get("subscription", ""),
-                "recorded_date": invoice_date.strftime("%Y-%m-%d"),
+                "customer_id": customer_id,
                 "currency": "usd"
             })
             
@@ -91,7 +91,8 @@ def process_invoice(invoice: Dict[str, Any]) -> List[Dict[str, Any]]:
         
     lines = invoice.get("lines", {}).get("data", [])
     invoice_date = datetime.fromtimestamp(invoice["created"])
-    return schedule_revenue(lines, invoice_date)
+    customer_id = invoice.get("customer", "")
+    return schedule_revenue(lines, invoice_date, customer_id)
 
 if __name__ == "__main__":    
 
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     # Print the results in a readable format
     print("\nRevenue Recognition Schedule:")
     print("-" * 120)
-    print(f"{'Date':<12} {'Status':<10} {'Type':<12} {'USD':>10} {'GBP':>10} {'Rate':>7} {'Recorded Date':<14} {'Invoice Line ID'}")
+    print(f"{'Date':<12} {'Status':<10} {'Type':<12} {'USD':>10} {'GBP':>10} {'Rate':>7} {'Customer ID':<14} {'Invoice Line ID'}")
     print("-" * 120)
     
     for entry in sorted(revenue_schedule, key=lambda x: (x['date'], x['type'])):
@@ -118,7 +119,7 @@ if __name__ == "__main__":
               f"${entry['amount_usd']:>9.2f} "
               f"£{entry['amount_gbp']:>9.2f} "
               f"{entry['gbp_rate']:>7.3f} "
-              f"{entry['recorded_date']:<14} "
+              f"{entry['customer_id']:<14} "
               f"{entry['invoice_line_id']}")
     
     # Print summary
